@@ -1,5 +1,6 @@
 package demo;
 
+import entity.Course;
 import entity.Instructor;
 import entity.InstructorDetail;
 import org.hibernate.Session;
@@ -14,6 +15,7 @@ public class MainOneToOneUni {
                 .configure("hibernate.cfg.xml")
                 .addAnnotatedClass(Instructor.class)
                 .addAnnotatedClass(InstructorDetail.class)
+                .addAnnotatedClass(Course.class)
                 .buildSessionFactory();
 
         Session session = sessionFactory.getCurrentSession();
