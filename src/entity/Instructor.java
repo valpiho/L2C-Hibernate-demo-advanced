@@ -87,7 +87,7 @@ public class Instructor {
         this.courseList = courseList;
     }
 
-    public void add(Course course) {
+    public void addCourse(Course course) {
         if (courseList == null) {
             courseList = new ArrayList<>();
         }
