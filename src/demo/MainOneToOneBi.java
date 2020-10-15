@@ -28,7 +28,10 @@ public class MainOneToOneBi {
                     instructorDetail.getInstructor());
 
             session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
+            session.close();
             sessionFactory.close();
         }
     }
