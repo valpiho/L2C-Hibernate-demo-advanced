@@ -16,8 +16,7 @@ public class Course {
     @Column(name = "title")
     private String title;
 
-    @ManyToOne(cascade = {
-            CascadeType.DETACH, CascadeType.MERGE,
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "instructor_id")
     private Instructor instructor;
@@ -26,6 +25,14 @@ public class Course {
             cascade = CascadeType.ALL)
     @JoinColumn(name = "course_id")
     private List<Review> reviewList;
+
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {CascadeType.DETACH, CascadeType.MERGE,
+                    CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinTable(name = "course_student",
+            joinColumns = @JoinColumn(name = "course_id"),
+            inverseJoinColumns = @JoinColumn(name = "student_id"))
+    private List<Student> studentList;
 
     public Course() {}
 
@@ -65,6 +72,14 @@ public class Course {
         this.reviewList = reviewList;
     }
 
+    public List<Student> getStudentList() {
+        return studentList;
+    }
+
+    public void setStudentList(List<Student> studentList) {
+        this.studentList = studentList;
+    }
+
     public void addReview(Review review) {
         if (reviewList == null) {
             reviewList = new ArrayList<>();
@@ -73,11 +88,22 @@ public class Course {
         reviewList.add(review);
     }
 
+    public void addStudent(Student student) {
+        if (studentList == null) {
+            studentList = new ArrayList<>();
+        }
+
+        studentList.add(student);
+    }
+
     @Override
     public String toString() {
         return "Course{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
+                ", instructor=" + instructor +
+                ", reviewList=" + reviewList +
+                ", studentList=" + studentList +
                 '}';
     }
 }
